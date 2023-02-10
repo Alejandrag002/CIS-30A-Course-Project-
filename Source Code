@@ -1,0 +1,72 @@
+from guizero import App, Text, TextBox, Picture, PushButton, Box, info
+
+#define the function to pop up information box
+def submit_form():
+    info("Form submitted!", "Thank you for using my program!")
+
+# define the PushButton Function
+def search_food():
+    # this establishes searchkey and input box in the function
+    global search_key, box
+    search = search_key.value
+    # this will destroy previous box everytime there is a new input
+    box.destroy()
+    # this wil create a new box everytime the 'submit' button is clicked
+    box = Box(container1, width = 300, height = 250)
+    # this creates a widget to place picture in
+    pic = Picture(box, width = 300, height = 250)
+    # check if input matches
+    if search_key.value == 'ceviche':
+        pic.image = 'ceviche.png'
+    elif search_key.value == 'nachos':
+        pic.image = 'nachos.png'
+    elif search_key.value == 'casado':
+        pic.image = 'casado.png'
+    elif search_key.value == 'wrap':
+        pic.image = 'wrap.png'
+    elif search_key.value == 'wings':
+        pic.image = 'wings.png'
+    # is user input does not match, the box will be empty
+    else:
+        text = Text(box, text = 'No Results\n Please Enter\n ceviche, nachos, casado, wrap, wings')
+        
+    # this will clear search box after submitting
+    search_key.clear()
+    
+# this adds the App title
+app = App(title = 'Food I Ate in Costa Rica!', width = 600, height = 350, bg = '#EAD9DE')
+
+# this adds text to the widget
+welcome_message = Text(app, text = '---This is Some Food I Ate in Costa Rica---', size = 20, font = 'Merriweather', color = 'dark blue', bg = '#D599FA')
+type_food = Text(app, text = 'search for\n ceviche, nachos, casado, wrap, wings ', size = 15, font = 'Merriweather', color = 'dark blue', bg = '#D599FA')
+
+# creates container for picture
+container1 = Box(app)
+
+# adds logo
+logo = Picture(container1, image = 'flan.png', width = 250, height = 250, align = 'left')
+
+# this will hold the picture
+box = Box(container1, width = 300, height = 250, align = 'right')
+
+# container for the intructions and the search bar
+container2 = Box(app)
+
+# instructions
+instruction = Text(container2, text = 'Search for food: ', width = 20, align = 'left')
+
+# this adds text box widgets
+search_key = TextBox(container2, width = 20, align = 'left')
+search_key.focus()
+
+# this adds PushButton widget to GUI
+update = PushButton(container2, command = search_food, width = 10, text = 'Submit', align = 'left')
+
+# quit button
+quit_button = PushButton(container2, command = app.destroy, width = 10, text = 'Quit', align = 'right')
+
+#add second PushButton widget to GUI 
+submission = PushButton(app, command =  submit_form, text = "Submit Form", grid = [1,3], align = "left")
+
+# mainloop ofcourseeee
+app.display()
